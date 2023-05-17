@@ -46,7 +46,7 @@ const path = {
         images: srcPath + "assets/img/**/*.{jpg,png,svg,gif,ico,webp,webmanifest,xml,json}",
         fonts:  srcPath + "assets/fonts/**/*.{eot,woff,woff2,ttf,svg}"
     },
-    clean: srcPath + "**/*.*" && "./" + distPath 
+    clean: srcPath + "." && "./" + distPath
 }
 
 function serve() {
@@ -149,6 +149,7 @@ function fonts() {
 
 function clean() {
     return del(path.clean)
+
 }
 
 function duplicate() {
