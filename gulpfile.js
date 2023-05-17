@@ -17,6 +17,7 @@ const del = require("del");
 const notify = require("gulp-notify")
 const imagewebp = require("gulp-webp")
 const browserSync = require("browser-sync").create();
+const copy = require("gulp-copy")
 
 /* Paths */
 const srcPath = "src/"
@@ -45,7 +46,7 @@ const path = {
         images: srcPath + "assets/img/**/*.{jpg,png,svg,gif,ico,webp,webmanifest,xml,json}",
         fonts:  srcPath + "assets/fonts/**/*.{eot,woff,woff2,ttf,svg}"
     },
-    clean: "./" + distPath
+    clean: srcPath + "**/*.*" && "./" + distPath 
 }
 
 function serve() {
@@ -150,6 +151,11 @@ function clean() {
     return del(path.clean)
 }
 
+function duplicate() {
+    return gulp.src('src-template/**/*.*')
+      .pipe(copy('src', { prefix: 1 }));
+}
+  
 function watchFiles() {
     gulp.watch([path.watch.html], html)
     gulp.watch([path.watch.css], css)
@@ -160,7 +166,7 @@ function watchFiles() {
 
 const build = gulp.series(clean, gulp.parallel(html, css, js, images, webpImages, fonts))
 const watch = gulp.parallel(build, watchFiles, serve)
-
+const ready = gulp.parallel(clean, duplicate)
 
 
 
@@ -174,3 +180,4 @@ exports.clean = clean
 exports.build = build
 exports.watch = watch
 exports.default = watch
+exports.ready = ready
