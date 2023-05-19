@@ -1,2 +1,2 @@
 # gulp-template
-1.0 gulp
+v1.1 gulp
